@@ -23,7 +23,7 @@ import { examples } from "./examples";
 
 const initialExample = 1;
 
-const EditorPage: React.FunctionComponent = () => {
+const EditorPage = () => {
   const [stixFontData, setStixFontData] = React.useState<FontData | null>(null);
   const [lmFontData, setLmFontData] = React.useState<FontData | null>(null);
   const [bonumFontData, setBonumFontData] = React.useState<FontData | null>(

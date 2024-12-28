@@ -1,21 +1,17 @@
-import * as React from 'react';
-
-type EmptyProps = Record<string, never>;
-
 type FormattingEvent =
   | {
-      readonly type: 'color';
+      readonly type: "color";
       readonly value: string;
     }
   | {
-      readonly type: 'cancel';
+      readonly type: "cancel";
     }
   | {
-      readonly type: 'uncancel';
+      readonly type: "uncancel";
     };
 
 // TODO: determine the color based on the current selection
-const FormattingPalette: React.FC<EmptyProps> = (props) => {
+const FormattingPalette = () => {
   return (
     <div>
       <input
@@ -24,9 +20,9 @@ const FormattingPalette: React.FC<EmptyProps> = (props) => {
           const color = e.target.value;
 
           if (document.activeElement) {
-            const event = new CustomEvent<FormattingEvent>('formatting', {
+            const event = new CustomEvent<FormattingEvent>("formatting", {
               detail: {
-                type: 'color',
+                type: "color",
                 value: color,
               },
               bubbles: true,
@@ -40,9 +36,9 @@ const FormattingPalette: React.FC<EmptyProps> = (props) => {
       <button
         onClick={() => {
           if (document.activeElement) {
-            const event = new CustomEvent<FormattingEvent>('formatting', {
+            const event = new CustomEvent<FormattingEvent>("formatting", {
               detail: {
-                type: 'cancel',
+                type: "cancel",
               },
               bubbles: true,
               cancelable: true,
@@ -57,9 +53,9 @@ const FormattingPalette: React.FC<EmptyProps> = (props) => {
       <button
         onClick={() => {
           if (document.activeElement) {
-            const event = new CustomEvent<FormattingEvent>('formatting', {
+            const event = new CustomEvent<FormattingEvent>("formatting", {
               detail: {
-                type: 'uncancel',
+                type: "uncancel",
               },
               bubbles: true,
               cancelable: true,

@@ -26,7 +26,7 @@ const simpleRow = builders.row([
   builders.char("0"),
 ]);
 
-const EditorPage: React.FunctionComponent = () => {
+const EditorPage = () => {
   const [tab, setTab] = React.useState<"parse" | "edit">("parse");
   const [stixFontData, setStixFontData] = React.useState<FontData | null>(null);
   const [editTree, setEditTree] = React.useState<State["row"]>(simpleRow);

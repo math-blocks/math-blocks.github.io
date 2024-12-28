@@ -35,7 +35,7 @@ const safeParse = (input: Editor.types.CharRow): Semantic.types.Node | null => {
 // - use the colorMap option to highlight related nodes between steps
 //   e.g. 2(x + y) -> 2x + 2y the 2s would be the same color, etc.
 
-const SolverPage: React.FunctionComponent = () => {
+const SolverPage = () => {
   const [input, setInput] = React.useState(initialInput);
   const [answer, setAnswer] = React.useState<Editor.types.CharRow | null>(null);
   const [step, setStep] = React.useState<Solver.Step | null>(null);
