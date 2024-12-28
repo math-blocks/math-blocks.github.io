@@ -26,7 +26,7 @@ const simpleRow = b.row([
   b.char("0"),
 ]);
 
-const BaselinePage: React.FunctionComponent = () => {
+const BaselinePage = () => {
   const [stixFontData, setStixFontData] = React.useState<FontData | null>(null);
 
   React.useEffect(() => {

@@ -1,25 +1,25 @@
-import * as React from 'react';
+import * as React from "react";
 
 type Props = {
   readonly style?: React.CSSProperties;
   readonly children: React.ReactNode;
 };
 
-export const HStack: React.FunctionComponent<Props> = (props) => {
+export const HStack = (props: Props) => {
   const style: React.CSSProperties = {
     ...props.style,
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   };
 
   return <div style={style}>{props.children}</div>;
 };
 
-export const VStack: React.FunctionComponent<Props> = (props) => {
+export const VStack = (props: Props) => {
   const style: React.CSSProperties = {
     ...props.style,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   };
 
   return <div style={style}>{props.children}</div>;
