@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { createHashRouter, RouterProvider, Link } from "react-router-dom";
 
-import BaselinePage from "./basline/baseline-page";
+import BaselinePage from "./baseline/baseline-page";
 import EditorPage from "./editor/editor-page";
 import ParserPage from "./parser/parser-page";
 import SolverPage from "./solver/solver-page";
