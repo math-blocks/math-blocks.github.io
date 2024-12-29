@@ -17,6 +17,9 @@ const Homepage = () => {
         <li>
           <Link to="/solver">Solver</Link>
         </li>
+        <li>
+          <a href="/docs">Docs</a>
+        </li>
       </ul>
     </div>
   );
