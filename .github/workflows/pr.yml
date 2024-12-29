@@ -84,6 +84,9 @@ jobs:
       - name: yarn install
         working-directory: math-blocks
         run: yarn install
+      - name: yarn build-tsc
+        working-directory: math-blocks
+        run: yarn build-tsc
       - name: yarn typedoc
         working-directory: math-blocks
         run: yarn typedoc
