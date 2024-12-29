@@ -1,5 +1,8 @@
 import { createRoot } from "react-dom/client";
-import { createHashRouter, RouterProvider, Link } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
+
+import Homepage from "./homepage";
+import NotFound from "./not-found";
 
 import BaselinePage from "./baseline/baseline-page";
 import EditorPage from "./editor/editor-page";
@@ -11,36 +14,6 @@ const container = document.createElement("div");
 if (document.body) {
   document.body.appendChild(container);
 }
-
-const Homepage = () => {
-  return (
-    <div>
-      <h1>MathBlocks Demos</h1>
-      <ul>
-        <li>
-          <Link to="/baseline">Baseline</Link>
-        </li>
-        <li>
-          <Link to="/editor">Editor</Link>
-        </li>
-        <li>
-          <Link to="/parser">Parser</Link>
-        </li>
-        <li>
-          <Link to="/solver">Solver</Link>
-        </li>
-      </ul>
-    </div>
-  );
-};
-
-const NotFound = () => {
-  return (
-    <div>
-      <h1>404: Not Found</h1>
-    </div>
-  );
-};
 
 const router = createHashRouter([
   {
