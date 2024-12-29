@@ -26,7 +26,7 @@ jobs:
         working-directory: math-blocks
         run: yarn typedoc
       - name: Upload Docs artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./docs/
           name: docs
@@ -70,7 +70,7 @@ jobs:
           name: docs
           path: ./dist/docs
       - name: Upload Page Artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist/
 
