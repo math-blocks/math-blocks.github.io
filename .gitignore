@@ -1,5 +1,6 @@
 node_modules
 dist
+.buildcache
 .vscode
 .DS_Store
 .vite

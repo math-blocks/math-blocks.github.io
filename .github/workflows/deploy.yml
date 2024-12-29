@@ -4,7 +4,37 @@ on:
       - main
 
 jobs:
+  docs:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: yarn install
+        working-directory: math-blocks
+        run: yarn install
+      - name: yarn build-tsc
+        working-directory: math-blocks
+        run: yarn build-tsc
+      - name: yarn typedoc
+        working-directory: math-blocks
+        run: yarn typedoc
+      - name: Upload Docs artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./docs/
+          name: docs
+
   build:
+    needs: docs
+    permissions:
+      actions: read # to access artifacts from the build job
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -34,8 +64,13 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: yarn build
         run: yarn build
+      - name: download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docs
+          path: ./dist/docs
       - name: Upload Page Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist/
 
