@@ -7,7 +7,7 @@ import * as Solver from "@math-blocks/solver";
 import * as Typesetter from "@math-blocks/typesetter";
 import * as Tex from "@math-blocks/tex";
 import { MathEditor, MathRenderer, FontDataContext } from "@math-blocks/react";
-import { getFontData, parse } from "@math-blocks/opentype";
+import { getFontData, parse as parseFont } from "@math-blocks/opentype";
 import type { Font } from "@math-blocks/opentype";
 import { macros } from "@math-blocks/tex";
 
@@ -17,10 +17,18 @@ import Substeps from "./substeps";
 
 const operators = Object.keys(macros).filter((key) => key === macros[key]);
 
-// const parser = new Tex.Parser('x^2 + 5x + 6 = 0');
-// const parser = new Tex.Parser('2x + 3y \u2212 7 = x \u2212 y + 1');
-const parser = new Tex.Parser("3x \u2212 y = 6, x + 2y = \u22121");
-const initialInput: Editor.types.CharRow = parser.parse();
+const parse = (input: string): Editor.types.CharRow => {
+  const parser = new Tex.Parser(input);
+  return parser.parse();
+};
+
+const initialInputs: Record<Solver.Problem["type"], Editor.types.CharRow> = {
+  Factor: parse("3x^2 + 11x + 6"),
+  SimplifyExpression: parse("2x + 3x"),
+  SolveLinearRelation: parse("2x + 3y \u2212 7 = x \u2212 y + 1"),
+  SolveQuadraticEquation: parse("x^2 + 5x + 6 = 0"),
+  SolveSystemOfEquations: parse("3x \u2212 y = 6, x + 2y = \u22121"),
+};
 
 const safeParse = (input: Editor.types.CharRow): Semantic.types.Node | null => {
   try {
@@ -31,18 +39,18 @@ const safeParse = (input: Editor.types.CharRow): Semantic.types.Node | null => {
 };
 
 // TODO:
-// - provide a UI disclosing sub-steps
 // - use the colorMap option to highlight related nodes between steps
 //   e.g. 2(x + y) -> 2x + 2y the 2s would be the same color, etc.
 
 const SolverPage = () => {
+  const [action, setAction] = React.useState<Solver.Problem["type"]>(
+    "SolveSystemOfEquations"
+  );
+  const [initialInput, setInitialInput] = React.useState(initialInputs[action]);
   const [input, setInput] = React.useState(initialInput);
   const [answer, setAnswer] = React.useState<Editor.types.CharRow | null>(null);
   const [step, setStep] = React.useState<Solver.Step | null>(null);
   const [error, setError] = React.useState<string | null>(null);
-  const [action, setAction] = React.useState<Solver.Problem["type"]>(
-    "SolveSystemOfEquations"
-  );
 
   const ast = React.useMemo(() => safeParse(input), [input]);
 
@@ -161,7 +169,7 @@ const SolverPage = () => {
     const loadFont = async (): Promise<void> => {
       const res = await fetch(stix2);
       const blob = await res.blob();
-      const font = await parse(blob as Blob);
+      const font = await parseFont(blob as Blob);
       console.log(font);
       setFont(font);
     };
@@ -211,9 +219,14 @@ const SolverPage = () => {
             <select
               style={{ marginRight: 8 }}
               value={action}
-              onChange={(event) =>
-                setAction(event.target.value as Solver.Problem["type"])
-              }
+              onChange={(event) => {
+                const problemType = event.target
+                  .value as Solver.Problem["type"];
+                setAction(problemType);
+                setInitialInput(initialInputs[problemType]);
+                setInput(initialInputs[problemType]);
+                setAnswer(null);
+              }}
             >
               <option value="Factor">Factor</option>
               <option value="SimplifyExpression">Simplify Expression</option>
